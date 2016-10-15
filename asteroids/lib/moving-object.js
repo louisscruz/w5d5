@@ -30,4 +30,17 @@ MovingObject.prototype.move = function () {
   this.pos = this.game.wrap([newX, newY]);
 };
 
+MovingObject.prototype.isCollidedWith = function (otherObject) {
+  let xDiff = Math.abs(this.pos[0] - otherObject.pos[0]);
+  let yDiff = Math.abs(this.pos[1] - otherObject.pos[1]);
+  let difference = Math.sqrt((xDiff * xDiff) + (yDiff * yDiff));
+  let radiusSum = this.radius + otherObject.radius;
+  if (difference <= radiusSum) {
+    alert('oh no')
+    console.log(difference, radiusSum);
+    return true;
+  }
+  return false;
+};
+
 module.exports = MovingObject;

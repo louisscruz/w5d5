@@ -3,7 +3,7 @@ const Asteroid = require('./asteroid');
 function Game(size) {
   this.DIM_X = size[0];
   this.DIM_Y = size[1];
-  this.NUM_ASTEROIDS = 15;
+  this.NUM_ASTEROIDS = 20;
   this.asteroids = this.addAsteroids();
 }
 
@@ -28,6 +28,7 @@ Game.prototype.draw = function(context) {
   this.asteroids.forEach(asteroid => {
     asteroid.draw(context);
   });
+  this.checkCollisions();
 };
 
 Game.prototype.moveObjects = function() {
@@ -59,6 +60,16 @@ Game.prototype.addBackground = function(context) {
   grd.addColorStop(1.000, 'rgba(53, 44, 44, 1.000)');
   context.fillStyle = grd;
   context.fillRect(0, 0, this.DIM_X, this.DIM_Y);
+};
+
+Game.prototype.checkCollisions = function() {
+  // Use a binary tree next time
+  for (let i = 0; i < this.asteroids.length; i++) {
+    for (let j = 0; j < this.asteroids.length; j++) {
+      if (i === j) continue;
+      this.asteroids[i].isCollidedWith(this.asteroids[j]);
+    }
+  }
 }
 
 module.exports = Game;
