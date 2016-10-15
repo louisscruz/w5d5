@@ -6,14 +6,14 @@ const Util = {
     childClass.prototype.constructor = childClass;
   },
 
-  randomVec: function (length) {
+  randomVec: function (distance) {
     let newVel = [];
     for (let i = 0; i < 2; i++) {
-      let polarity = Math.round(Math.random()) === 0 ? -1 : 1
+      let polarity = Math.round(Math.random()) === 0 ? -1 : 1;
       if (polarity === -1) {
-        newVel.push(Math.floor(Math.random() * 5) * polarity - 1);
+        newVel.push(Math.floor(Math.random() * distance) * polarity - 1);
       } else {
-        newVel.push(Math.floor(Math.random() * 5) * polarity + 1);
+        newVel.push(Math.floor(Math.random() * distance) * polarity + 1);
       }
     }
     console.log(newVel);
@@ -21,10 +21,10 @@ const Util = {
   },
 
   randomColor: function() {
-    const letters = '0123456789ABCDEF';
+    const letters = '123456789ABCDE';
     let color = '#';
     for (var i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
+      color += letters[Math.floor(Math.random() * 14)];
     }
     return color;
   },

@@ -40,6 +40,7 @@ Game.prototype.moveObjects = function() {
 Game.prototype.wrap = function(pos) {
   let newX = pos[0];
   let newY = pos[1];
+
   if (pos[0] > this.DIM_X + 50) {
     newX = pos[0] - this.DIM_X - 100;
   } else if (pos[0] < -50) {
@@ -65,11 +66,19 @@ Game.prototype.addBackground = function(context) {
 Game.prototype.checkCollisions = function() {
   // Use a binary tree next time
   for (let i = 0; i < this.asteroids.length; i++) {
-    for (let j = 0; j < this.asteroids.length; j++) {
+    for (let j = i + 1; j < this.asteroids.length; j++) {
       if (i === j) continue;
-      this.asteroids[i].isCollidedWith(this.asteroids[j]);
+      if (this.asteroids[i].isCollidedWith(this.asteroids[j])) {
+        this.remove(this.asteroids[i]);
+        this.remove(this.asteroids[j]);
+      }
     }
   }
-}
+};
+
+Game.prototype.remove = function(asteroid) {
+  const index = this.asteroids.indexOf(asteroid);
+  this.asteroids.splice(index, 1);
+};
 
 module.exports = Game;

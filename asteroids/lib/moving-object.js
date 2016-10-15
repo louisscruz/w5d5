@@ -36,7 +36,6 @@ MovingObject.prototype.isCollidedWith = function (otherObject) {
   let difference = Math.sqrt((xDiff * xDiff) + (yDiff * yDiff));
   let radiusSum = this.radius + otherObject.radius;
   if (difference <= radiusSum) {
-    alert('oh no')
     console.log(difference, radiusSum);
     return true;
   }
