@@ -24,10 +24,24 @@ MovingObject.prototype.draw = function (context) {
   context.fill();
 };
 
-MovingObject.prototype.move = function () {
-  let newX = this.pos[0] + this.vel[0];
-  let newY = this.pos[1] + this.vel[1];
-  this.pos = this.game.wrap([newX, newY]);
+MovingObject.prototype.collideWith = function (otherObject) {};
+
+const NORMAL_FPS = 1000 / 60;
+
+MovingObject.prototype.move = function (timeDelta) {
+  const velocityScale = timeDelta / NORMAL_FPS;
+  const offsetX = this.vel[0] * velocityScale;
+  const offsetY = this.vel[1] * velocityScale;
+
+  this.pos = [this.pos[0] + offsetX, this.pos[1] + offsetY];
+
+  if (this.game.isOutOfBounds(this.pos)) {
+    if (this.isWrappable) {
+      this.pos = this.game.wrap(this);
+    } else {
+      this.remove();
+    }
+  }
 };
 
 MovingObject.prototype.isCollidedWith = function (otherObject) {
@@ -36,10 +50,13 @@ MovingObject.prototype.isCollidedWith = function (otherObject) {
   let difference = Math.sqrt((xDiff * xDiff) + (yDiff * yDiff));
   let radiusSum = this.radius + otherObject.radius;
   if (difference <= radiusSum) {
-    console.log(difference, radiusSum);
     return true;
   }
   return false;
+};
+
+MovingObject.prototype.remove = function () {
+  this.game.remove(this);
 };
 
 module.exports = MovingObject;

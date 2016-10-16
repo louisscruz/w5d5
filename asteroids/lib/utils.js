@@ -16,7 +16,6 @@ const Util = {
         newVel.push(Math.floor(Math.random() * distance) * polarity + 1);
       }
     }
-    console.log(newVel);
     return newVel;
   },
 
